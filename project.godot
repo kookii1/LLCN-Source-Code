@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Lost Location Custom Night Source Code"
 run/main_scene="res://scenes/cn_menu.tscn"
-config/features=PackedStringArray("4.4", "Forward Plus")
+config/features=PackedStringArray("4.5", "Forward Plus")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/use_filter=false
 boot_splash/image="res://assets/splash/screen.png"
