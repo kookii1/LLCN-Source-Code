@@ -19,6 +19,9 @@ var CamLures : Dictionary = {
 func Init():
 	CalcMaxProgress()
 	SetKillTimer()
+	
+	if Global.NoHighLures:
+		$Active.volume_db = -11
 
 func _physics_process(delta):
 	AddProgress(delta)
@@ -67,7 +70,10 @@ func Deactivate():
 	Active = false
 	$PitchTimer.stop()
 	$Active.pitch_scale = 1.0
-	$Active.volume_db = -7.0
+	if Global.NoHighLures:
+		$Active.volume_db = -11.0
+	else:
+		$Active.volume_db = -7.0
 	$Sprite.play("off")
 	$Active.stop()
 	$Deactivate.play()
