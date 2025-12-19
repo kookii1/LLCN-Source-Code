@@ -289,7 +289,7 @@ func SetUsingFlashlight(value : bool):
 				EndWarning(false)
 				$Black.modulate.a = 1
 				var tween = get_tree().create_tween().set_trans(Tween.TRANS_SINE)
-				tween.tween_property($Black, "modulate:a", 0.0, 3.0)
+				tween.tween_property($Black, "modulate:a", 0.0, 2.0)
 		false:
 			$Sounds/Flashlight.stop()
 	

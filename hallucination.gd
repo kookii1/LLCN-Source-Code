@@ -17,6 +17,7 @@ func Deactivate():
 	Active = false
 	$Sprite.visible = false
 	$Sound.stop()
-	$Deactivate.play()
+	if !Global.NoHighLures:
+		$Deactivate.play()
 
 signal Activated
