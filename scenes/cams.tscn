@@ -3718,6 +3718,7 @@ stream = ExtResource("29_k7m6a")
 
 [node name="AudioLure" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("34_ep1yx")
+volume_db = -4.0
 
 [node name="Breathing" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("36_ovqt8")
@@ -3738,6 +3739,11 @@ pitch_scale = 0.9
 [node name="CancelProgress" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("41_w0vhs")
 pitch_scale = 1.2
+
+[node name="ButtonJam" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("28_rw8on")
+volume_db = 4.0
+pitch_scale = 0.5
 
 [connection signal="animation_finished" from="CamFlipSprite" to="." method="_on_cam_flip_sprite_animation_finished"]
 [connection signal="button_down" from="screen/HUD/SendBtn/Button" to="." method="_on_send_button_down"]

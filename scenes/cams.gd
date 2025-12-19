@@ -22,6 +22,9 @@ var CanChangeLure : bool = true
 
 var LightsOut : bool = false
 
+var NHLTweens : Array = [ null, null, null, null, null, null, null, null, null, null ]
+var AudioTween : Tween
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	SetUpCamSignals()
@@ -44,11 +47,40 @@ func HandleActionInput():
 	if (CamState == CAMSTATE.UP || CamState == CAMSTATE.GOINGUP):
 		if Input.is_action_just_pressed("high"):
 			SetAudioLure(LURE.HIGH)
+			if Global.NoHighLures:
+				SetAudioLure(LURE.OFF)
+				$Sounds/ButtonJam.play()
+				$Sounds/AudioLure.pitch_scale = 1.5
+				$Sounds/AudioLure.play()
+				var buttonnode = get_node("screen/Map/Buttons/" + str(CurrentCam))
+				buttonnode.modulate = Global.HighColour / 2
+				if NHLTweens[CurrentCam - 1]:
+					NHLTweens[CurrentCam - 1].kill()
+				NHLTweens[CurrentCam - 1] = get_tree().create_tween().set_trans(Tween.TRANS_BOUNCE)
+				NHLTweens[CurrentCam - 1].tween_property(buttonnode, "modulate", Color.WHITE, 0.5)
+				
+				if AudioTween:
+					AudioTween.kill()
+				AudioTween = get_tree().create_tween().set_trans(Tween.TRANS_QUAD)
+				AudioTween.tween_property($Sounds/AudioLure, "volume_db", -40, 0.5)
+				AudioTween.tween_callback($Sounds/AudioLure.stop)
 		if Input.is_action_just_pressed("med"):
+			if NHLTweens[CurrentCam - 1]:
+				NHLTweens[CurrentCam - 1].kill()
+			if AudioTween:
+					AudioTween.kill()
 			SetAudioLure(LURE.MED)
 		if Input.is_action_just_pressed("low"):
+			if NHLTweens[CurrentCam - 1]:
+				NHLTweens[CurrentCam - 1].kill()
+			if AudioTween:
+					AudioTween.kill()
 			SetAudioLure(LURE.LOW)
 		if Input.is_action_just_pressed("off"):
+			if NHLTweens[CurrentCam - 1]:
+				NHLTweens[CurrentCam - 1].kill()
+			if AudioTween:
+				AudioTween.kill()
 			SetAudioLure(LURE.OFF)
 
 func SetupMobileControls():
@@ -179,14 +211,17 @@ func DisplayCurrentLure():
 		LURE.LOW:
 			Colour = Global.LowColour
 			$Sounds/AudioLure.pitch_scale = 0.5
+			$Sounds/AudioLure.volume_db = 0
 			$screen/HUD/AudioLure.text = "Audio Lure: LOW"
 		LURE.MED:
 			Colour = Global.MedColour
 			$Sounds/AudioLure.pitch_scale = 1.0
+			$Sounds/AudioLure.volume_db = 0
 			$screen/HUD/AudioLure.text = "Audio Lure: MED"
 		LURE.HIGH:
 			Colour = Global.HighColour
 			$Sounds/AudioLure.pitch_scale = 1.5
+			$Sounds/AudioLure.volume_db = 0
 			$screen/HUD/AudioLure.text = "Audio Lure: HIGH"
 	$screen/HUD/AudioLure.modulate = Colour
 	var buttonnode = get_node("screen/Map/Buttons/" + str(CurrentCam))
@@ -202,14 +237,17 @@ func DisplayLure(num : int):
 			$screen/HUD/AudioLure.text = "Audio Lure: NONE"
 		LURE.LOW:
 			Colour = Global.LowColour
+			$Sounds/AudioLure.volume_db = 0
 			$Sounds/AudioLure.pitch_scale = 0.5
 			$screen/HUD/AudioLure.text = "Audio Lure: LOW"
 		LURE.MED:
 			Colour = Global.MedColour
+			$Sounds/AudioLure.volume_db = 0
 			$Sounds/AudioLure.pitch_scale = 1.0
 			$screen/HUD/AudioLure.text = "Audio Lure: MED"
 		LURE.HIGH:
 			Colour = Global.HighColour
+			$Sounds/AudioLure.volume_db = 0
 			$Sounds/AudioLure.pitch_scale = 1.5
 			$screen/HUD/AudioLure.text = "Audio Lure: HIGH"
 	if num == CurrentCam:
