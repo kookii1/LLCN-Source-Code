@@ -98,7 +98,17 @@ func Move():
 			if NextCam == 11:
 				Jumpscared.emit()
 			else:
-				$Footsteps.volume_db = CurrentCam * 2 - 15.0
+				if Global.NoHighLures:
+					$Footsteps.volume_db = CurrentCam - 6.0
+					if CurrentCam == 1:
+						$Footsteps.pitch_scale = 0.72
+						$Footsteps.volume_db = -3
+					elif CurrentCam == 4:
+						$Footsteps.pitch_scale = 0.92
+					else:
+						$Footsteps.pitch_scale = (CurrentCam / 30.0) + 0.75
+				else:
+					$Footsteps.volume_db = CurrentCam * 2 - 15.0
 				$Footsteps.stream = SoundCache.pick_random()
 				$Footsteps.play()
 			Moved.emit()
