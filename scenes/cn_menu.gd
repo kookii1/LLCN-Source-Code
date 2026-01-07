@@ -222,7 +222,7 @@ func _on_start_button_up():
 	Global.PresetID = PresetStrID
 	Global.Score = Points
 	Global.Tutorial = false
-	Global.Bitcrush = false
+	Global.Bitcrush = true
 	Global.StarDiff = 1
 	$Cover.visible = true
 	var CamTween = get_tree().create_tween().set_trans(Tween.TRANS_QUAD)

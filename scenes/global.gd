@@ -57,7 +57,7 @@ var TimeScale = 1
 
 var Bitcrush : bool = false
 var StarDiff : int = 1
-var NoHighLures : bool = false
+var NoHighLures : bool = true
 
 # Trophies
 var Minus3Strat : bool = true

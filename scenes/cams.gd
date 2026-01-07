@@ -329,7 +329,8 @@ func DisplayAnimMove():
 	if CamState == CAMSTATE.GOINGUP || CamState == CAMSTATE.UP:
 		$screen/LoadAnim.stop()
 		$screen/LoadAnim.play()
-		$Sounds/AnimMoveStatic.play()
+		if !Global.NoHighLures:
+			$Sounds/AnimMoveStatic.play()
 
 func _on_cam_flip_sprite_animation_finished():
 	match CamState:
