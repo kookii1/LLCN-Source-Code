@@ -1,4 +1,4 @@
-[gd_scene load_steps=110 format=4 uid="uid://b8fgo8r3gwykg"]
+[gd_scene load_steps=112 format=4 uid="uid://b8fgo8r3gwykg"]
 
 [ext_resource type="Script" uid="uid://c5hasq8k87kc0" path="res://scenes/office.gd" id="1_n7mwr"]
 [ext_resource type="Texture2D" uid="uid://dt5m1goe3f2d5" path="res://assets/office/room.png" id="1_ocvok"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dkm1qxm3qxp1w" path="res://scenes/cams.tscn" id="3_7obve"]
 [ext_resource type="Texture2D" uid="uid://h8pjq38pop2c" path="res://assets/office/flashlight.png" id="3_otv15"]
 [ext_resource type="Texture2D" uid="uid://121now4avphb" path="res://assets/office/bonnie.png" id="3_ukhp8"]
+[ext_resource type="Shader" uid="uid://dk7qxahdky1my" path="res://scenes/crt.gdshader" id="3_vilxk"]
 [ext_resource type="FontFile" uid="uid://brvcb4id55tyf" path="res://assets/fonts/PressStart2P-vaV7.ttf" id="4_8bdkk"]
 [ext_resource type="Texture2D" uid="uid://bm7femh0i3jrb" path="res://assets/office/door_centre.png" id="4_88owb"]
 [ext_resource type="PackedScene" uid="uid://flbm8qowypcv" path="res://scenes/freddy.tscn" id="4_mg0h5"]
@@ -52,6 +53,23 @@
 [ext_resource type="Texture2D" uid="uid://tk4d0rwuv71y" path="res://assets/mouse.png" id="40_ia7cr"]
 [ext_resource type="AudioStream" uid="uid://bu70gwkso3lm1" path="res://assets/sounds/deathstaticfade.mp3" id="42_p5qip"]
 [ext_resource type="AudioStream" uid="uid://ddgcm85gd2xh2" path="res://assets/sounds/honk.mp3" id="46_mgwsn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_12wqr"]
+shader = ExtResource("3_vilxk")
+shader_parameter/resolution = Vector2(1920, 216)
+shader_parameter/scan_line_amount = 1.0
+shader_parameter/warp_amount = 2.3750000011091288e-07
+shader_parameter/noise_amount = 0.03
+shader_parameter/interference_amount = 0.2
+shader_parameter/grille_amount = 0.1
+shader_parameter/grille_size = 1.0
+shader_parameter/vignette_amount = 0.6
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/aberation_amount = 0.5
+shader_parameter/roll_line_amount = 0.3
+shader_parameter/roll_speed = 1.0
+shader_parameter/scan_line_strength = -8.0
+shader_parameter/pixel_strength = -2.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2lhy8"]
 
@@ -3297,6 +3315,12 @@ Root = NodePath("..")
 Static = NodePath("../Camera2D/OpaqueStatic")
 Black = NodePath("../Black")
 Sound = NodePath("../Sounds/Fade")
+
+[node name="CRT" type="Polygon2D" parent="."]
+process_mode = 3
+z_index = 4096
+material = SubResource("ShaderMaterial_12wqr")
+polygon = PackedVector2Array(-120, -184, 2968, -192, 3096, 1264, -168, 1216)
 
 [node name="Black" type="Polygon2D" parent="."]
 process_mode = 3
