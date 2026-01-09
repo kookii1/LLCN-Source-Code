@@ -51,6 +51,10 @@ class_name SaveFile
 @export var Fullscreen : bool = true
 @export var Stretch : bool = true
 @export var VSync : bool = true
+@export var JumpscareVolume : float = 1.0
+@export var LightToggle : bool = true
+@export var CRTShader : bool = true
+@export var LureToggle : bool = true
 
 @export var Controls : Dictionary = {
 	"light": InputMap.action_get_events("light"),
@@ -77,6 +81,14 @@ var ActionToKeycode : Dictionary = {
 func _init():
 	if !has_meta("SmoothTurn"):
 		set_meta("SmoothTurn", true)
+	if !has_meta("CRTShader"):
+		set_meta("CRTShader", true)
+	if !has_meta("LightToggle"):
+		set_meta("LightToggle", true)
+	if !has_meta("LureToggle"):
+		set_meta("LureToggle", true)
+	if !has_meta("JumpscareVolume"):
+		set_meta("JumpscareVolume", 1.0)
 	for action in Controls:
 		var NewEvent : InputEventKey = InputEventKey.new()
 		NewEvent.pressed = true

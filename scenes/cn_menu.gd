@@ -48,7 +48,9 @@ var Preset : String = "Custom"
 var PresetStrID : String = "Custom"
 var Points : int = 0
 var VolumePercent : float = 100
+var JumpscareVolumePercent : float = 100
 var VolumeDB : float = 0
+var JumpscareVolumeDB : float = 0
 var SaveDataLoaded : bool = false
 var SelectingNewKey : bool = false
 var ActionToChange : String = "light"
@@ -466,9 +468,26 @@ func LoadSettings():
 	if PlayerData.SaveData.get_meta("SmoothTurn") != null:
 		$SettingsMenu/GeneralTitle/SmoothTurn.button_pressed = PlayerData.SaveData.get_meta("SmoothTurn")
 	
+	# Light Toggle
+	if PlayerData.SaveData.get_meta("LightToggle") != null:
+		$SettingsMenu/GeneralTitle/LightToggle.button_pressed = PlayerData.SaveData.get_meta("LightToggle")
+	
+	# Lure Toggle
+	if PlayerData.SaveData.get_meta("LureToggle") != null:
+		$SettingsMenu/GeneralTitle/LureToggle.button_pressed = PlayerData.SaveData.get_meta("LureToggle")
+	
+	# CRT Shader
+	if PlayerData.SaveData.get_meta("CRTShader") != null:
+		$SettingsMenu/GeneralTitle/CRTShader.button_pressed = PlayerData.SaveData.get_meta("CRTShader")
+	
 	# Volume
 	_on_volume_slider_value_changed(PlayerData.SaveData.Volume * 100)
 	$SettingsMenu/GeneralTitle/VolumeSlider.value = PlayerData.SaveData.Volume * 100
+	
+	# CRT Shader
+	if PlayerData.SaveData.get_meta("JumpscareVolume") != null:
+		_on_jumpscare_slider_value_changed(PlayerData.SaveData.get_meta("JumpscareVolume") * 100)
+		$SettingsMenu/GeneralTitle/JumpscareSlider.value = PlayerData.SaveData.get_meta("JumpscareVolume") * 100
 	
 	# Audio Lure Colours
 	$SettingsMenu/HighLureColour.color = PlayerData.SaveData.HighColour
@@ -772,3 +791,30 @@ func _on_bc_forward_button_down() -> void:
 		BitcrushStar = 1
 	UpdateBitcrushStars()
 	$press.play()
+
+func _on_jumpscare_slider_value_changed(value: float) -> void:
+	JumpscareVolumePercent = value
+	$SettingsMenu/GeneralTitle/JumpscareSlider/VolumeLabel.text = "Jumpscare Vol: " + str(int(value)) + "%"
+	if JumpscareVolumePercent > 0:
+		JumpscareVolumeDB = (10.0 / log(2)) * log((JumpscareVolumePercent / 100.0))
+		AudioServer.set_bus_mute(1, false)
+	else:
+		JumpscareVolumeDB = -72
+		AudioServer.set_bus_mute(1, true)
+	AudioServer.set_bus_volume_db(1, JumpscareVolumeDB)
+
+func _on_jumpscare_slider_drag_ended(value_changed: bool) -> void:
+	PlayerData.SaveData.set_meta("JumpscareVolume", JumpscareVolumePercent / 100.0)
+	PlayerData.save_character_data(PlayerData.SaveData)
+
+func _on_light_toggle_toggled(toggled_on: bool) -> void:
+	PlayerData.SaveData.set_meta("LightToggle", toggled_on)
+	PlayerData.save_character_data(PlayerData.SaveData)
+
+func _on_crt_shader_toggled(toggled_on: bool) -> void:
+	PlayerData.SaveData.set_meta("CRTShader", toggled_on)
+	PlayerData.save_character_data(PlayerData.SaveData)
+
+func _on_lure_toggle_toggled(toggled_on: bool) -> void:
+	PlayerData.SaveData.set_meta("LureToggle", toggled_on)
+	PlayerData.save_character_data(PlayerData.SaveData)
