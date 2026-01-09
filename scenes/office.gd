@@ -147,6 +147,20 @@ func HandleInput():
 		FadeTween.tween_property($Black, "modulate:a", 1, 2.0)
 		FadeTween.tween_callback(ChangeSceneMenu)
 
+func HandleReset():
+	if not StaticGuyEntering:
+		FailingRequirement = true
+		Global.ResetInGameVars()
+		if Global.Challenges["TheParty"]:
+			if Global.AIDiffs["bonnie"] > 0:
+				Global.AIDiffs["bonnie"] -= 5
+			if Global.AIDiffs["chica"] > 0:
+				Global.AIDiffs["chica"] -= 5
+		ChangeSceneOffice()
+
+func ChangeSceneOffice():
+	get_tree().change_scene_to_file("res://scenes/office.tscn")
+
 func PowerOutage():
 	PowerOut = true
 	var tween1 = get_tree().create_tween()

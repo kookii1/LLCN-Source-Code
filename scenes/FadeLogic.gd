@@ -5,6 +5,10 @@ extends Node
 @export var Black : Node2D
 @export var Sound : AudioStreamPlayer
 
+func _physics_process(delta: float) -> void:
+	if Input.is_action_just_pressed("reset"):
+		get_parent().HandleReset()
+
 func FailAchievement():
 	PassInGlobalVars()
 	Sound.play()

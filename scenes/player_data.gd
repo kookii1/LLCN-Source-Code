@@ -11,6 +11,16 @@ func _ready():
 	else:
 		if SaveData.SaveFileVersion < 3:
 			SaveData.SaveFileVersion = 3
+		if !SaveData.Controls.has("reset"):
+			SaveData.Controls["reset"] = InputMap.action_get_events("reset")
+			var NewEvent : InputEventKey = InputEventKey.new()
+			NewEvent.pressed = true
+			NewEvent.echo = false
+			NewEvent.physical_keycode = KEY_F1
+			NewEvent.keycode = DisplayServer.keyboard_get_keycode_from_physical(NewEvent.physical_keycode)
+			NewEvent.key_label = NewEvent.keycode
+			SaveData.Controls["reset"] = [NewEvent]
+			print("set")
 		save_character_data(SaveData)
 
 func load_character_data():

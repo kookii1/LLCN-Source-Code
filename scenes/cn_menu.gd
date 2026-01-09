@@ -62,17 +62,19 @@ var ActionToName : Dictionary = {
 	"low": "LOW Lure",
 	"med": "MED Lure",
 	"high": "HIGH Lure",
-	"quit": "Quit"
+	"quit": "Quit",
+	"reset": "Restart" 
 }
 
 var ActionToKeycode : Dictionary = {
-	"light": 32,
-	"flipcam": 83,
-	"low": 65,
-	"med": 87,
-	"high": 68,
-	"off": 4194325,
-	"quit": 4194305
+	"light": KEY_SPACE,
+	"flipcam": KEY_S,
+	"low": KEY_A,
+	"med": KEY_W,
+	"high": KEY_D,
+	"off": KEY_SHIFT,
+	"quit": KEY_ESCAPE,
+	"reset": KEY_F1 
 }
 
 var UsernameHovered : bool = false
