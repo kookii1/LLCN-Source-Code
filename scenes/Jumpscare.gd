@@ -3,6 +3,7 @@ extends AnimatedSprite2D
 @export var FadeNode : Node2D
 @export var Static : Node2D
 @export var Sound : AudioStreamPlayer
+@export var LowJumpSound: AudioStreamPlayer
 @export var JumpSound : AudioStreamPlayer
 
 # Called when the node enters the scene tree for the first time.
@@ -27,3 +28,4 @@ func _on_jump_timer_1_timeout():
 	Static.visible = true
 	Sound.play()
 	JumpSound.stop()
+	LowJumpSound.stop()

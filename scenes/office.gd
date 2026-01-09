@@ -472,6 +472,7 @@ func Jumpscare(animatronic : int):
 				$Camera2D/Jumpscare.play("fredbear")
 				$Sounds/Jumpscare.pitch_scale = 0.5
 		$Sounds/Jumpscare.play()
+		$Sounds/Thud.play()
 		get_tree().paused = true
 
 func SpringtrapJumpscare():

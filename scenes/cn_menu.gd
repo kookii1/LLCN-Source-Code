@@ -802,6 +802,16 @@ func _on_jumpscare_slider_value_changed(value: float) -> void:
 		JumpscareVolumeDB = -72
 		AudioServer.set_bus_mute(1, true)
 	AudioServer.set_bus_volume_db(1, JumpscareVolumeDB)
+	
+	var LowJumpscareVolumePercent = max(100 - JumpscareVolumePercent, 0)
+	var LowJumpscareVolumeDB
+	if LowJumpscareVolumePercent > 0:
+		LowJumpscareVolumeDB = (10.0 / log(2)) * log((LowJumpscareVolumePercent / 100.0))
+		AudioServer.set_bus_mute(2, false)
+	else:
+		LowJumpscareVolumeDB = -72
+		AudioServer.set_bus_mute(2, true)
+	AudioServer.set_bus_volume_db(2, LowJumpscareVolumeDB)
 
 func _on_jumpscare_slider_drag_ended(value_changed: bool) -> void:
 	PlayerData.SaveData.set_meta("JumpscareVolume", JumpscareVolumePercent / 100.0)
