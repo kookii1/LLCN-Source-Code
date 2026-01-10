@@ -42,8 +42,16 @@ func _process(delta):
 func HandleActionInput():
 	if Input.is_action_just_pressed("flipcam") and CanBringUp:
 		ToggleCam()
-	if Input.is_action_just_pressed("light") and (CamState == CAMSTATE.UP || CamState == CAMSTATE.GOINGUP):
-		SetLight(!LightOn)
+		
+	if PlayerData.SaveData.get_meta("LightToggle") in [null, true]:
+		if Input.is_action_just_pressed("light") and (CamState == CAMSTATE.UP || CamState == CAMSTATE.GOINGUP):
+			SetLight(!LightOn)
+	else:
+		if Input.is_action_pressed("light") and !LightOn and (CamState == CAMSTATE.UP || CamState == CAMSTATE.GOINGUP):
+			SetLight(true)
+		elif Input.is_action_just_released("light") and (CamState == CAMSTATE.UP || CamState == CAMSTATE.GOINGUP):
+			SetLight(false)
+			
 	if (CamState == CAMSTATE.UP || CamState == CAMSTATE.GOINGUP):
 		if Input.is_action_just_pressed("high"):
 			SetAudioLure(LURE.HIGH)

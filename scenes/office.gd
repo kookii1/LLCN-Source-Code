@@ -245,12 +245,14 @@ func HandleCamVis(value : bool):
 	$Camera2D/cams.CanBringUp = value
 
 func HandleActionInput():
-	if Input.is_action_just_pressed("light"):
-		match $Camera2D/cams.CamState:
-			CAMSTATE.DOWN:
-				SetUsingFlashlight(!UsingFlashLight)
-			CAMSTATE.GOINGDOWN:
-				SetUsingFlashlight(!UsingFlashLight)
+	if PlayerData.SaveData.get_meta("LightToggle") in [null, true]:
+		if Input.is_action_just_pressed("light") and $Camera2D/cams.CamState in [CAMSTATE.DOWN, CAMSTATE.GOINGDOWN]:
+			SetUsingFlashlight(!UsingFlashLight)
+	else:
+		if Input.is_action_pressed("light") and !UsingFlashLight and $Camera2D/cams.CamState in [CAMSTATE.DOWN, CAMSTATE.GOINGDOWN]:
+			SetUsingFlashlight(true)
+		elif Input.is_action_just_released("light") and $Camera2D/cams.CamState in [CAMSTATE.DOWN, CAMSTATE.GOINGDOWN]:
+			SetUsingFlashlight(false)
 
 func CheckIfGenerating():
 	var LastValue = GeneratingPower
