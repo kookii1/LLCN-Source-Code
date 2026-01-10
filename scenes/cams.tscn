@@ -1,4 +1,4 @@
-[gd_scene load_steps=91 format=4 uid="uid://dkm1qxm3qxp1w"]
+[gd_scene load_steps=93 format=4 uid="uid://dkm1qxm3qxp1w"]
 
 [ext_resource type="Texture2D" uid="uid://s7glp8t4h5a6" path="res://assets/camera/cam1.png" id="1_7c7co"]
 [ext_resource type="Script" uid="uid://ceyhwj0secuf5" path="res://scenes/cams.gd" id="1_j2f3r"]
@@ -3229,6 +3229,29 @@ animations = [{
 "speed": 12.0
 }]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3vifg"]
+bg_color = Color(0.2520276, 0.25202766, 0.25202757, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+shadow_size = 4
+anti_aliasing = false
+
+[sub_resource type="Theme" id="Theme_6hp5v"]
+default_font = ExtResource("19_e5vsv")
+default_font_size = 16
+Button/font_sizes/font_size = 8
+Button/fonts/font = SubResource("FontFile_mx17q")
+Button/styles/disabled = SubResource("StyleBoxFlat_p4eg0")
+Button/styles/focus = SubResource("StyleBoxFlat_wvlfo")
+Button/styles/hover = SubResource("StyleBoxFlat_wvlfo")
+Button/styles/normal = SubResource("StyleBoxFlat_wvlfo")
+Button/styles/pressed = SubResource("StyleBoxFlat_3vifg")
+ProgressBar/styles/background = SubResource("StyleBoxFlat_y7rw1")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_ebq8x")
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_53lhe"]
 size = Vector2(896, 120)
 
@@ -3546,7 +3569,9 @@ offset_bottom = 6.1667
 scale = Vector2(0.25, 0.25)
 focus_mode = 0
 mouse_default_cursor_shape = 2
-theme = SubResource("Theme_wkb1s")
+theme = SubResource("Theme_6hp5v")
+toggle_mode = true
+button_pressed = true
 action_mode = 0
 shortcut_feedback = false
 shortcut_in_tooltip = false
@@ -3560,7 +3585,8 @@ offset_bottom = 6.58336
 scale = Vector2(0.25, 0.25)
 focus_mode = 0
 mouse_default_cursor_shape = 2
-theme = SubResource("Theme_wkb1s")
+theme = SubResource("Theme_6hp5v")
+toggle_mode = true
 action_mode = 0
 shortcut_feedback = false
 shortcut_in_tooltip = false
@@ -3574,7 +3600,8 @@ offset_bottom = 17.9167
 scale = Vector2(0.25, 0.25)
 focus_mode = 0
 mouse_default_cursor_shape = 2
-theme = SubResource("Theme_wkb1s")
+theme = SubResource("Theme_6hp5v")
+toggle_mode = true
 action_mode = 0
 shortcut_feedback = false
 shortcut_in_tooltip = false
@@ -3588,7 +3615,8 @@ offset_bottom = 17.8333
 scale = Vector2(0.25, 0.25)
 focus_mode = 0
 mouse_default_cursor_shape = 2
-theme = SubResource("Theme_wkb1s")
+theme = SubResource("Theme_6hp5v")
+toggle_mode = true
 action_mode = 0
 shortcut_feedback = false
 shortcut_in_tooltip = false
@@ -3602,7 +3630,8 @@ offset_bottom = 21.75
 scale = Vector2(0.25, 0.25)
 focus_mode = 0
 mouse_default_cursor_shape = 2
-theme = SubResource("Theme_wkb1s")
+theme = SubResource("Theme_6hp5v")
+toggle_mode = true
 action_mode = 0
 shortcut_feedback = false
 shortcut_in_tooltip = false
@@ -3616,7 +3645,8 @@ offset_bottom = 17.8333
 scale = Vector2(0.25, 0.25)
 focus_mode = 0
 mouse_default_cursor_shape = 2
-theme = SubResource("Theme_wkb1s")
+theme = SubResource("Theme_6hp5v")
+toggle_mode = true
 action_mode = 0
 shortcut_feedback = false
 shortcut_in_tooltip = false
@@ -3630,7 +3660,8 @@ offset_bottom = 31.25
 scale = Vector2(0.25, 0.25)
 focus_mode = 0
 mouse_default_cursor_shape = 2
-theme = SubResource("Theme_wkb1s")
+theme = SubResource("Theme_6hp5v")
+toggle_mode = true
 action_mode = 0
 shortcut_feedback = false
 shortcut_in_tooltip = false
@@ -3644,7 +3675,8 @@ offset_bottom = 30.75
 scale = Vector2(0.25, 0.25)
 focus_mode = 0
 mouse_default_cursor_shape = 2
-theme = SubResource("Theme_wkb1s")
+theme = SubResource("Theme_6hp5v")
+toggle_mode = true
 action_mode = 0
 shortcut_feedback = false
 shortcut_in_tooltip = false
@@ -3658,7 +3690,8 @@ offset_bottom = 31.1667
 scale = Vector2(0.25, 0.25)
 focus_mode = 0
 mouse_default_cursor_shape = 2
-theme = SubResource("Theme_wkb1s")
+theme = SubResource("Theme_6hp5v")
+toggle_mode = true
 action_mode = 0
 shortcut_feedback = false
 shortcut_in_tooltip = false
@@ -3672,7 +3705,8 @@ offset_bottom = 41.75
 scale = Vector2(0.25, 0.25)
 focus_mode = 0
 mouse_default_cursor_shape = 2
-theme = SubResource("Theme_wkb1s")
+theme = SubResource("Theme_6hp5v")
+toggle_mode = true
 action_mode = 0
 shortcut_feedback = false
 shortcut_in_tooltip = false

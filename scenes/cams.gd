@@ -150,6 +150,10 @@ func SwitchCam(num : int):
 	DisplayCurrentLure()
 	SetAnimatronicVis()
 	ChangedCam.emit()
+	
+	for CamButton : Button in $screen/Map/Buttons.get_children():
+		var cam_num: int = int(CamButton.text)
+		CamButton.set_pressed_no_signal(false)
 
 func HandleCancelBtn(delta : float):
 	if CancelBtnHeld:
