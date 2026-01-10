@@ -25,6 +25,12 @@ var LightsOut : bool = false
 var NHLTweens : Array = [ null, null, null, null, null, null, null, null, null, null ]
 var AudioTween : Tween
 
+enum DESYNC {NONE, BONNIE, CHICA}
+var BonnieTime: float = 0
+var ChicaTime: float = 0
+var Desync: float = 0
+var DesyncState: int = DESYNC.NONE
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	SetUpCamSignals()
@@ -97,6 +103,27 @@ func HandleActionInput():
 			if AudioTween:
 				AudioTween.kill()
 			SetAudioLure(LURE.OFF)
+
+func CalculateDesync():
+	var desync: float = abs(BonnieTime - ChicaTime)
+	var low_time: float =  4.5 * (0.75 ** (Global.StarDiff - 1))
+	var high_time: float =  5 * (0.75 ** (Global.StarDiff - 1))
+	var limit: float = 4.5 * 0.2 * (0.75 ** (Global.StarDiff - 1))
+	
+	while desync > high_time:
+		desync -= high_time
+	
+	if desync > 5 * high_time / 2.0:
+		desync = 5 * high_time - desync
+	
+	Desync = desync
+	
+	limit = max(0, limit - desync)
+	if DesyncState == DESYNC.BONNIE:
+		$screen/Chica/Timer.wait_time = $screen/Chica.RNG.randf_range(low_time, min(high_time, low_time + limit))
+	elif DesyncState == DESYNC.CHICA:
+		$screen/Bonnie/Timer.wait_time = $screen/Bonnie.RNG.randf_range(low_time, min(high_time, low_time + (limit / 2)))
+	DesyncState = DESYNC.NONE
 
 func SetupMobileControls():
 	$screen/Map.scale = Vector2(14,14)
@@ -370,6 +397,13 @@ func _on_bonnie_time_out():
 	$screen/Bonnie.PassInInfo(LurePlacements, CurrentCam)
 	$screen/Bonnie.Move()
 	SetAnimatronicVis()
+	
+	if Global.NoHighLures:
+		BonnieTime = (Time.get_ticks_msec() * 0.001)
+		if DesyncState == DESYNC.CHICA:
+			CalculateDesync()
+		else:
+			DesyncState = DESYNC.BONNIE
 
 func _on_bonnie_moved():
 	if $screen/Bonnie.CurrentCam == CurrentCam || $screen/Bonnie.PreviousCam == CurrentCam:
@@ -383,6 +417,13 @@ func _on_chica_time_out():
 	$screen/Chica.PassInInfo(LurePlacements, CurrentCam)
 	$screen/Chica.Move()
 	SetAnimatronicVis()
+	
+	if Global.NoHighLures:
+		ChicaTime = (Time.get_ticks_msec() * 0.001)
+		if DesyncState == DESYNC.BONNIE:
+			CalculateDesync()
+		else:
+			DesyncState = DESYNC.CHICA
 
 func _on_static_guy_moved():
 	StaticGuyMoved.emit()

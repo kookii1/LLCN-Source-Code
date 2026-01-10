@@ -116,8 +116,8 @@ func Move():
 			Moved.emit()
 
 func _on_timer_timeout():
-	TimeOut.emit()
 	SetTimer()
+	TimeOut.emit()
 
 func SetTimer():
 	if RandomiseTimer:

@@ -97,8 +97,8 @@ func InitSoundCache():
 		SoundCache[i] = load("res://assets/sounds/chica/retro/" + str(i) + ".wav")
 
 func _on_timer_timeout():
-	TimeOut.emit()
 	SetTimer()
+	TimeOut.emit()
 
 func SetTimer():
 	if RandomiseTimer:
