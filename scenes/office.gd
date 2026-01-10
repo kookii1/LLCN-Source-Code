@@ -113,6 +113,9 @@ func _ready():
 		
 	if Global.Bitcrush:
 		HandlePowerGenVis(false)
+	
+	if PlayerData.SaveData.get_meta("CRTShader") in [null, true] and !Global.Tutorial:
+		$CRT.visible = true
 
 func _physics_process(delta):
 	UpdatePower(delta)

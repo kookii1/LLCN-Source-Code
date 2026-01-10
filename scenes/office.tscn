@@ -3316,6 +3316,7 @@ Sound = NodePath("../Sounds/Fade")
 
 [node name="CRT" type="Polygon2D" parent="."]
 process_mode = 3
+visible = false
 z_index = 4096
 material = SubResource("ShaderMaterial_12wqr")
 polygon = PackedVector2Array(-120, -184, 2968, -192, 3096, 1264, -168, 1216)
