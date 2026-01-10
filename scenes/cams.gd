@@ -122,7 +122,7 @@ func CalculateDesync():
 	if DesyncState == DESYNC.BONNIE:
 		$screen/Chica/Timer.wait_time = $screen/Chica.RNG.randf_range(low_time, min(high_time, low_time + limit))
 	elif DesyncState == DESYNC.CHICA:
-		$screen/Bonnie/Timer.wait_time = $screen/Bonnie.RNG.randf_range(low_time, min(high_time, low_time + (limit / 2)))
+		$screen/Bonnie/Timer.wait_time = $screen/Bonnie.RNG.randf_range(low_time, min(high_time, low_time + limit))
 	DesyncState = DESYNC.NONE
 
 func SetupMobileControls():
