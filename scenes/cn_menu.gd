@@ -226,8 +226,9 @@ func _on_start_button_up():
 	Global.PresetID = PresetStrID
 	Global.Score = Points
 	Global.Tutorial = false
-	Global.Bitcrush = true
+	Global.Bitcrush = false
 	Global.StarDiff = 1
+	Global.NoHighLures = false
 	$Cover.visible = true
 	var CamTween = get_tree().create_tween().set_trans(Tween.TRANS_QUAD)
 	CamTween.tween_property($Camera2D, "zoom", Vector2(3,3), 3.0)
@@ -523,6 +524,15 @@ func LoadSettings():
 	$Bitcrush/CompletedStars.frame = BestStar
 	UpdateBitcrushStars()
 	
+	# NHL
+	if BestStar != 5 and PlayerData.SaveData.get_meta("NHLPPBest") == 0:
+		$Bitcrush/NHL.visible = false
+		$Bitcrush/NHLStars.visible = false
+		$Bitcrush/NHLPPStars.visible = false
+	else:
+		$Bitcrush/NHLStars.frame = PlayerData.SaveData.get_meta("NHLBest")
+		$Bitcrush/NHLPPStars.frame = PlayerData.SaveData.get_meta("NHLPPBest")
+	
 	$Start.disabled = false
 	$Tutorial.disabled = false
 	$BitcrushBtn.disabled = false
@@ -697,6 +707,7 @@ func _on_tutorial_pressed():
 	Global.Tutorial = true
 	Global.Bitcrush = false
 	Global.StarDiff = 1
+	Global.NoHighLures = false
 	$Cover.visible = true
 	var CamTween = get_tree().create_tween().set_trans(Tween.TRANS_QUAD)
 	CamTween.tween_property($Camera2D, "zoom", Vector2(3,3), 3.0)
@@ -770,6 +781,7 @@ func _on_bitcrush_start_pressed() -> void:
 	Global.Tutorial = false
 	Global.Bitcrush = true
 	Global.StarDiff = BitcrushStar
+	Global.NoHighLures = $Bitcrush/NHL.button_pressed
 	$Cover.visible = true
 	var CamTween = get_tree().create_tween().set_trans(Tween.TRANS_QUAD)
 	CamTween.tween_property($Camera2D, "zoom", Vector2(3,3), 3.0)

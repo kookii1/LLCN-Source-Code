@@ -56,6 +56,9 @@ class_name SaveFile
 @export var CRTShader : bool = true
 @export var LureToggle : bool = true
 
+@export var NHLBest : int = 0
+@export var NHLPPBest : int = 0
+
 @export var Controls : Dictionary = {
 	"light": InputMap.action_get_events("light"),
 	"flipcam": InputMap.action_get_events("flipcam"),
@@ -89,6 +92,10 @@ func _init():
 		set_meta("LureToggle", true)
 	if !has_meta("JumpscareVolume"):
 		set_meta("JumpscareVolume", 1.0)
+	if !has_meta("NHLBest"):
+		set_meta("NHLBest", 0)
+	if !has_meta("NHLPPBest"):
+		set_meta("NHLPPBest", 0)
 	for action in Controls:
 		var NewEvent : InputEventKey = InputEventKey.new()
 		NewEvent.pressed = true

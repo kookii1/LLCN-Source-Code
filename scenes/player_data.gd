@@ -21,6 +21,10 @@ func _ready():
 			NewEvent.key_label = NewEvent.keycode
 			SaveData.Controls["reset"] = [NewEvent]
 			print("set")
+		if !has_meta("NHLBest"):
+			set_meta("NHLBest", 0)
+		if !has_meta("NHLPPBest"):
+			set_meta("NHLPPBest", 0)
 		save_character_data(SaveData)
 
 func load_character_data():

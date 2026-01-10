@@ -6,6 +6,9 @@ const LosingCharacterPos : int = 328
 const WinningCharacterPosStart : int = 2192
 const WinningCharacterPosEnd : int = 1632
 
+var NHL: bool = false
+var NHLPP: bool = false
+
 var PresetToTrophy : Dictionary = {
 	"Custom": 0,
 	"FNAF1": GjId.FNAF1,
@@ -40,6 +43,13 @@ func _ready():
 			$Labels/TitleLabel/SubTitlePreset.text = "How Did We Get Here?+"
 		elif "Bitcrush" in Global.Preset:
 			$Labels/TitleLabel/SubTitlePreset.text = "Bitcrush " + str(Global.StarDiff)
+			
+			if Global.NoHighLures:
+				$Labels/TitleLabel/SubTitlePreset.text += " No High Lures"
+				NHL = true
+			elif PlayerData.SaveData.Controls["high"][0].key_label == PlayerData.SaveData.Controls["off"][0].key_label:
+				$Labels/TitleLabel/SubTitlePreset.text += " No High Lures++"
+				NHLPP = true
 		else:
 			$Labels/TitleLabel/SubTitlePreset.text = Global.Preset
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
@@ -67,11 +77,6 @@ func _ready():
 				$Labels/TitleLabel/SubTitle.text = "Foxy went into a hallway"
 			"FullFocus":
 				$Labels/TitleLabel/SubTitle.text = "You lost focus"
-				
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
 
 func DisplayLoseStats():
 	var HighestLength : int = 0
@@ -118,7 +123,7 @@ func DisplayWinStats():
 	var PowerGenerated : String = str(int(Global.PowerGenerated)) + "%"
 	
 	# Score
-	var Score = Global.Score
+	var Score: int = Global.Score
 	var AdditionalScore = 0
 	if !(Global.Preset in ["How Did We Get Here?+", "How Did We Get Here?++"]):
 		if Global.GlobeTrotter and !Global.TrackingGlobeTrotter:
@@ -131,6 +136,10 @@ func DisplayWinStats():
 	
 	if Global.Bitcrush:
 		Score = 2000 + Global.StarDiff * 2000
+		if NHL:
+			Score *= 1.5
+		elif NHLPP:
+			Score = roundi((float(Score) * 5.0 / 3.0) / 1000.0) * 1000
 	
 	# High Score
 	var HighScore = "0"
@@ -203,6 +212,11 @@ func DisplayWinStats():
 		if Global.PresetID != "Custom":
 			if "Bitcrush" in Global.PresetID:
 				PlayerData.SaveData.BitcrushBest = max(PlayerData.SaveData.BitcrushBest, Global.StarDiff)
+				if NHLPP:
+					PlayerData.SaveData.set_meta("NHLBest", max(PlayerData.SaveData.get_meta("NHLBest"), Global.StarDiff))
+					PlayerData.SaveData.set_meta("NHLPPBest", max(PlayerData.SaveData.get_meta("NHLPPBest"), Global.StarDiff))
+				elif NHL:
+					PlayerData.SaveData.set_meta("NHLBest", max(PlayerData.SaveData.get_meta("NHLBest"), Global.StarDiff))
 			else:
 				HandleSaveData(Global.PresetID)
 				if Global.PresetID == "How++":
