@@ -53,7 +53,14 @@ func HandleActionInput():
 			SetLight(false)
 			
 	if (CamState == CAMSTATE.UP || CamState == CAMSTATE.GOINGUP):
-		if Input.is_action_just_pressed("high"):
+		var luretoggle: bool = PlayerData.SaveData.get_meta("LureToggle") in [null, true]
+		if luretoggle:
+			var low: bool = (Input.is_action_just_pressed("low") and LurePlacements[CurrentCam] == LURE.LOW)
+			var med: bool = (Input.is_action_just_pressed("med") and LurePlacements[CurrentCam] == LURE.MED)
+			var high: bool = (Input.is_action_just_pressed("high") and LurePlacements[CurrentCam] == LURE.HIGH)
+			luretoggle = luretoggle and (low or med or high)
+		
+		if Input.is_action_just_pressed("high") and !luretoggle:
 			SetAudioLure(LURE.HIGH)
 			if Global.NoHighLures:
 				SetAudioLure(LURE.OFF)
@@ -72,19 +79,19 @@ func HandleActionInput():
 				AudioTween = get_tree().create_tween().set_trans(Tween.TRANS_QUAD)
 				AudioTween.tween_property($Sounds/AudioLure, "volume_db", -40, 0.5)
 				AudioTween.tween_callback($Sounds/AudioLure.stop)
-		if Input.is_action_just_pressed("med"):
+		if Input.is_action_just_pressed("med") and !luretoggle:
 			if NHLTweens[CurrentCam - 1]:
 				NHLTweens[CurrentCam - 1].kill()
 			if AudioTween:
 					AudioTween.kill()
 			SetAudioLure(LURE.MED)
-		if Input.is_action_just_pressed("low"):
+		if Input.is_action_just_pressed("low") and !luretoggle:
 			if NHLTweens[CurrentCam - 1]:
 				NHLTweens[CurrentCam - 1].kill()
 			if AudioTween:
 					AudioTween.kill()
 			SetAudioLure(LURE.LOW)
-		if Input.is_action_just_pressed("off"):
+		if Input.is_action_just_pressed("off") or luretoggle:
 			if NHLTweens[CurrentCam - 1]:
 				NHLTweens[CurrentCam - 1].kill()
 			if AudioTween:
