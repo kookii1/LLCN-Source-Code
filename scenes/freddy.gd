@@ -119,3 +119,7 @@ func _on_cams_closed_cam() -> void:
 		position.x = randi_range(272, 2432)
 		position.y = randi_range(0, 256)
 		scale = Vector2(1 + (position.y / 512.0), 1 + (position.y / 512.0))
+		if position.x > 1168 and position.x < 1440:
+			position.x += 1168 - 1440
+		elif position.x < 1720 and position.x >= 1440:
+			position.x += 1720 - 1440
