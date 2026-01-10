@@ -97,7 +97,7 @@ func _ready():
 		#$Camera2D/PowerGen/Button.position.y = -12
 	InitAI()
 	FindFirstMousePos()
-	#Input.mouse_mode = Input.MOUSE_MODE_CONFINED
+	Input.mouse_mode = Input.MOUSE_MODE_CONFINED
 	var tween = get_tree().create_tween()
 	tween.tween_property($Black, "modulate:a", 0, 1.0)
 	$Dark.modulate.a = 1 * int(LightsOut)
