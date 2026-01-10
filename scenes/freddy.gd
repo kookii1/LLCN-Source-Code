@@ -2,6 +2,7 @@ extends Node2D
 
 @export var Difficulty : int
 @export var HyperFreddy : bool = false
+@export var Flashlight: Node2D
 var Active : bool = false
 var Progress : float = 0.0
 var MaxProgress : float = 50.0
@@ -9,6 +10,7 @@ var PowerGenerating : bool = false
 var PhoneGuyRinging : bool = false
 var LuringStaticGuy : bool = false
 var QueueDeactivation : bool = false
+var FlashlightOn: bool = false
 
 enum LURE {OFF, LOW, MED, HIGH}
 var CamLures : Dictionary = {
@@ -23,14 +25,23 @@ func Init():
 	if Global.NoHighLures:
 		$Active.volume_db = -11
 
+func _process(delta: float) -> void:
+	CheckFlashlight()
+
+func CheckFlashlight() -> void:
+	if Active and FlashlightOn and Flashlight.global_position.distance_squared_to($Hitbox.global_position) <= (60 + 72.44 * scale.x)**2:
+		Deactivate()
+
 func _physics_process(delta):
 	AddProgress(delta)
 
-func PassInInfo(lures : Dictionary, PowerGen : bool, PhoneGuy : bool, StaticGuy : bool):
+func PassInInfo(lures : Dictionary, PowerGen : bool, PhoneGuy : bool, StaticGuy : bool, LightOn: bool):
 	CamLures = lures
 	PowerGenerating = PowerGen
 	PhoneGuyRinging = PhoneGuy
 	LuringStaticGuy = StaticGuy
+	FlashlightOn = LightOn
+	CheckFlashlight()
 
 func CalcMaxProgress():
 	MaxProgress = 50.0 - (Difficulty * 2.0)
@@ -63,8 +74,7 @@ func Activate():
 	$KillTimer.start()
 	$PitchTimer.start()
 	Activated.emit()
-	if QueueDeactivation:
-		Deactivate()
+	CheckFlashlight()
 
 func Deactivate():
 	Active = false

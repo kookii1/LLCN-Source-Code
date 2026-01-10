@@ -260,7 +260,7 @@ func CheckIfGenerating():
 	$Camera2D/PowerGen/Button.disabled = !($Camera2D/cams.LurePlacements == NoLures)
 	if Global.Mobile:
 		$Camera2D/PowerGen/Mobile.visible = $Camera2D/cams.LurePlacements == NoLures
-	$freddy.PassInInfo($Camera2D/cams.LurePlacements, GeneratingPower, $phone_guy.Ringing, $Camera2D/cams.SendBtnHeld)
+	$freddy.PassInInfo($Camera2D/cams.LurePlacements, GeneratingPower, $phone_guy.Ringing, $Camera2D/cams.SendBtnHeld, UsingFlashLight)
 	if LastValue != GeneratingPower:
 		$Sounds/PowerGenSwitch.play()
 		if GeneratingPower:
@@ -295,7 +295,6 @@ func FindFirstMousePos():
 func SetUsingFlashlight(value : bool):
 	UsingFlashLight = value
 	$Flashlight.visible = value
-	$Flashlight/Area2D/CollisionShape2D.disabled = !value
 	$Sounds/FlashlightPress.play()
 	match value:
 		true:
@@ -308,6 +307,8 @@ func SetUsingFlashlight(value : bool):
 				tween.tween_property($Black, "modulate:a", 0.0, 2.0)
 		false:
 			$Sounds/Flashlight.stop()
+	
+	$freddy.PassInInfo($Camera2D/cams.LurePlacements, GeneratingPower, false, $Camera2D/cams.SendBtnHeld, UsingFlashLight)
 	
 	# TUTORIAL
 	if Tutorial and CurrentLabel == 2:
@@ -589,7 +590,7 @@ func BitcrushWin():
 	tween.tween_callback(Win)
 
 func _on_cams_lure_changed(lure : int):
-	$freddy.PassInInfo($Camera2D/cams.LurePlacements, GeneratingPower, $phone_guy.Ringing, $Camera2D/cams.SendBtnHeld)
+	$freddy.PassInInfo($Camera2D/cams.LurePlacements, GeneratingPower, $phone_guy.Ringing, $Camera2D/cams.SendBtnHeld, UsingFlashLight)
 	
 	# TUTORIAL
 	if Tutorial and CurrentLabel == 4:
@@ -605,7 +606,7 @@ func _on_cams_lure_changed(lure : int):
 			ProgressTutorial(6)
 
 func _on_cams_send_btn_changed():
-	$freddy.PassInInfo($Camera2D/cams.LurePlacements, GeneratingPower, $phone_guy.Ringing, $Camera2D/cams.SendBtnHeld)
+	$freddy.PassInInfo($Camera2D/cams.LurePlacements, GeneratingPower, $phone_guy.Ringing, $Camera2D/cams.SendBtnHeld, UsingFlashLight)
 
 func _on_freddy_jumpscared():
 	Jumpscare(JUMPSCARE.FREDDY)
@@ -645,11 +646,11 @@ func EndWarning(AsPhoneguy : bool):
 			$Camera2D/HUD/WarningPhoneGuy.visible = true
 
 func _on_phone_guy_began_ringing():
-	$freddy.PassInInfo($Camera2D/cams.LurePlacements, GeneratingPower, true, $Camera2D/cams.SendBtnHeld)
+	$freddy.PassInInfo($Camera2D/cams.LurePlacements, GeneratingPower, true, $Camera2D/cams.SendBtnHeld, UsingFlashLight)
 	StartWarning(true)
 
 func _on_phone_guy_ended_ringing():
-	$freddy.PassInInfo($Camera2D/cams.LurePlacements, GeneratingPower, false, $Camera2D/cams.SendBtnHeld)
+	$freddy.PassInInfo($Camera2D/cams.LurePlacements, GeneratingPower, false, $Camera2D/cams.SendBtnHeld, UsingFlashLight)
 	EndWarning(true)
 
 func _on_springtrap_jumpscared():

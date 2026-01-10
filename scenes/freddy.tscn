@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://flbm8qowypcv"]
+[gd_scene load_steps=7 format=3 uid="uid://flbm8qowypcv"]
 
 [ext_resource type="Texture2D" uid="uid://ca2f1ivkx6nim" path="res://assets/office/freddy_deactive.png" id="1_6uxl7"]
 [ext_resource type="Script" uid="uid://cvyolswkoy1lo" path="res://scenes/freddy.gd" id="1_d0p1w"]
@@ -24,9 +24,6 @@ animations = [{
 "name": &"on",
 "speed": 5.0
 }]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_de8h5"]
-radius = 72.4431
 
 [node name="freddy" type="Node2D"]
 position = Vector2(272, 0)
@@ -55,15 +52,8 @@ one_shot = true
 wait_time = 4.0
 one_shot = true
 
-[node name="Hitbox" type="Area2D" parent="."]
+[node name="Hitbox" type="Marker2D" parent="."]
 position = Vector2(-3.05176e-05, 199)
-collision_layer = 4
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-shape = SubResource("CircleShape2D_de8h5")
 
 [connection signal="timeout" from="KillTimer" to="." method="_on_kill_timer_timeout"]
 [connection signal="timeout" from="PitchTimer" to="." method="_on_pitch_timer_timeout"]
-[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
-[connection signal="area_exited" from="Hitbox" to="." method="_on_hitbox_area_exited"]
